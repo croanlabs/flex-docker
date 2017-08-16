@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+  nginx:
+    image: openresty/openresty:alpine
+    restart: always
+    ports:
+      - "3000:443"
+    volumes:
+      - ./nginx/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./nginx/conf/.htpasswd:/usr/local/openresty/nginx/conf/.htpasswd
+      - ./nginx/ssl/:/etc/ssl/
+      - ./nginx/flex/:/var/www/flex/
+    networks:
+      - flex_network
+    depends_on:
+      - flex-api
+      
+  flex-api:
+    #image: ${DOCKER_REGISTRY}/flex-api:latest
+    image: flex-api:latest
+    restart: always
+    ports:
+      - "8881:8080"
+    volumes:
+      - ./flex-api/conf/:/etc/flex/
+      - flex-logs:/var/log/flex
+    networks:
+      - flex_network
+
+networks:
+  flex_network:
+    driver: bridge
+
+volumes:
+  flex-logs:
