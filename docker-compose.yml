@@ -17,8 +17,7 @@ services:
       - flex-api
       
   flex-api:
-    #image: ${DOCKER_REGISTRY}/flex-api:latest
-    image: flex-api:latest
+    image: ${DOCKER_REGISTRY}/flexapi:latest
     restart: always
     ports:
       - "8881:8080"

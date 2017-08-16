@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  nginx:
+      build: ./nginx
+      restart: always
+      ports:
+        - "80:80"
+        - "443:443"
+      networks:
+        - flex_network
+      depends_on:
+        - flex-api
+
+  flex-api:
+    image: ${DOCKER_REGISTRY}/flexapi:latest
+    restart: always
+    ports:
+      - "8881:8080"
+    volumes:
+      - ./flex-api/conf/:/etc/flex/
+      - flex-logs:/var/log/flex
+    networks:
+      - flex_network
+
+networks:
+  flex_network:
+    driver: bridge
+
+volumes:
+  flex-logs:
