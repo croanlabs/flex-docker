@@ -26,6 +26,21 @@ services:
       - flex-logs:/var/log/flex
     networks:
       - flex_network
+    depends_on:
+      - postgres-db
+
+  postgres-db:
+      image: postgres:alpine
+      restart: always
+      environment:
+        POSTGRES_PASSWORD: flexMasterPassw0rd
+      ports:
+        - "5432:5432"
+      volumes:
+        - ./postgres-db/scripts/create_flex_schema.sql:/docker-entrypoint-initdb.d/create_flex_schema.sql
+        - postgres-database:/var/lib/postgresql/data
+      networks:
+        - flex_network
 
 networks:
   flex_network:
@@ -33,3 +48,4 @@ networks:
 
 volumes:
   flex-logs:
+  postgres-database:
