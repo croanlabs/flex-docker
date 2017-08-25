@@ -1,3 +1,3 @@
 FROM postgres:alpine
 
-COPY ./scripts/ /docker-entrypoint-initdb.d/
+COPY ./scripts/prod /docker-entrypoint-initdb.d/

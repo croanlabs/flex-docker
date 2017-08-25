@@ -37,7 +37,7 @@ services:
       ports:
         - "5432:5432"
       volumes:
-        - ./postgres-db/scripts/create_flex_schema.sql:/docker-entrypoint-initdb.d/create_flex_schema.sql
+        - ./postgres-db/scripts/test/create_flex_schema.sql:/docker-entrypoint-initdb.d/create_flex_schema.sql
         - postgres-database:/var/lib/postgresql/data
       networks:
         - flex_network
