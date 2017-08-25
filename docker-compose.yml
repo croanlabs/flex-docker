@@ -23,7 +23,7 @@ services:
       - "8881:8080"
     volumes:
       - ./flex-api/conf/:/etc/flex/
-      - flex-logs:/var/log/flex
+      - flex_logs:/var/log/flex
     networks:
       - flex_network
     depends_on:
@@ -38,7 +38,7 @@ services:
         - "5432:5432"
       volumes:
         - ./postgres-db/scripts/test/create_flex_schema.sql:/docker-entrypoint-initdb.d/create_flex_schema.sql
-        - postgres-database:/var/lib/postgresql/data
+        - postgres_database:/var/lib/postgresql/data
       networks:
         - flex_network
 
@@ -47,5 +47,5 @@ networks:
     driver: bridge
 
 volumes:
-  flex-logs:
-  postgres-database:
+  flex_logs:
+  postgres_database:
