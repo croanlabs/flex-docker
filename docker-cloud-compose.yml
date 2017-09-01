@@ -13,13 +13,24 @@ services:
         - flex-api
 
   flex-api:
-    image: ${DOCKER_REGISTRY}/flexapi:latest
+    build: ./flex-api
     restart: always
     ports:
       - "8881:8080"
     volumes:
-      - ./flex-api/conf/:/etc/flex/
-      - flex-logs:/var/log/flex
+      - flex_logs:/var/log/flex
+    networks:
+      - flex_network
+
+  postgres-db:
+    build: ./postgres-db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: flexProdMasterPassw0rd_231
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_database:/var/lib/postgresql/data
     networks:
       - flex_network
 
@@ -28,4 +39,5 @@ networks:
     driver: bridge
 
 volumes:
-  flex-logs:
+  flex_logs:
+  postgres_database:
