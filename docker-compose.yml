@@ -10,12 +10,14 @@ services:
       - ./nginx/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
       - ./nginx/conf/.htpasswd:/usr/local/openresty/nginx/conf/.htpasswd
       - ./nginx/ssl/:/etc/ssl/
-      - ./nginx/flex/:/var/www/flex/
+#      - ./nginx/flex/:/var/www/flex/
+      - flex_ui:/var/www/flex/
     networks:
       - flex_network
     depends_on:
       - flex-api
-      
+      - flex-ui
+
   flex-api:
     image: ${DOCKER_REGISTRY}/flexapi:latest
     restart: always
@@ -28,6 +30,11 @@ services:
       - flex_network
     depends_on:
       - postgres-db
+
+  flex-ui:
+    image: ${DOCKER_REGISTRY}/flexui
+    volumes:
+      - flex_ui:/var/www/
 
   postgres-db:
       image: postgres:alpine
@@ -49,3 +56,4 @@ networks:
 volumes:
   flex_logs:
   postgres_database:
+  flex_ui:
