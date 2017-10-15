@@ -40,7 +40,7 @@ services:
       - flex_ui:/var/www/
 
   postgres-db:
-      image: postgres:alpine
+      image: postgres:10.0-alpine
       restart: always
       environment:
         POSTGRES_PASSWORD: flexMasterPassw0rd
