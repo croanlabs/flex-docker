@@ -23,6 +23,9 @@ services:
     restart: always
     ports:
       - "8881:8080"
+    environment:
+      TZ: Europe/Vienna
+      spring.profiles.active: local
     volumes:
       - ./flex-api/conf/:/etc/flex/
       - flex_logs:/var/log/flex
@@ -37,7 +40,7 @@ services:
       - flex_ui:/var/www/
 
   postgres-db:
-      image: postgres:alpine
+      image: postgres:10.0-alpine
       restart: always
       environment:
         POSTGRES_PASSWORD: flexMasterPassw0rd
