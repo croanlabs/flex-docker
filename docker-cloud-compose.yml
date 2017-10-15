@@ -17,6 +17,9 @@ services:
     restart: always
     ports:
       - "8881:8080"
+    environment:
+      TZ: Europe/Vienna
+      spring.profiles.active: prod
     volumes:
       - flex_logs:/var/log/flex
     networks:
@@ -34,6 +37,11 @@ services:
     networks:
       - flex_network
 
+  flex-ui:
+    image: ${DOCKER_REGISTRY}/flexui
+    volumes:
+      - flex_ui:/var/www/
+
 networks:
   flex_network:
     driver: bridge
@@ -41,3 +49,4 @@ networks:
 volumes:
   flex_logs:
   postgres_database:
+  flex_ui:
